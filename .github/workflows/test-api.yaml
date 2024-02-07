@@ -29,3 +29,9 @@ jobs:
         # -X es el flag de CURL para hacer una POST Request en HTTP; -H es el flag de headers y -d es el de data
       - name: Get Users
         run: curl http://app:3000/api/users
+        # tanto en la 28 como en la 31 lo cambie a app:3000 app porque asi llame al servicio en la linea 9 y 3000 porque es el puerto
+        #en docker donde esta la aplicacion en node
+        # la otra forma era localhost:3001 porque asi lo habia mapeado en los puertos de cada imagen (en realidad la de node js)
+        #esto esta asi porque al laburar todo adentro del mismo container, participan de la misma network y docker expone todos los puertos
+        # a las imagenes o aplicaciones corriendo dentro del mismo contenedor, en cambio si los servicios y mi workflow estan por fuera
+        #es con localhost para poder comunicarse como estaba anteriormente
