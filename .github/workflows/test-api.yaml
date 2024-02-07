@@ -8,14 +8,14 @@ jobs:
     services:
       app:
         image: alialaa17/simple-node-api #necesito esta seccion de app image porque github actions no tiene un build como docker
-        ports:
-          - 3001:3000
+        #ports:
+        #  - 3001:3000
         env:
           MONGO_HOSTNAME: mongo #debe ser igual a la linea de abajo (viceversa), aca va con : en vez de igual como en el docker file
       mongo:
         image: mongo #obviamente ya existe en dockerhub
-        ports:
-          - 27017:27017
+        #ports:
+        #  - 27017:27017
     steps: #los steps van a correr en el runner machine, no corren dentro de un container como los servicios definidos arriba, ademas de 
     #que no se especifico dentro de un container, si no dentro de un job para el runner machine
       - name: Install Curl
@@ -25,7 +25,7 @@ jobs:
       - name: Dump Services Context
         run: echo '${{ toJson(job.services) }}'
       - name: Post a user
-        run: 'curl -X POST http://localhost:3001/api/users -H ''Content-Type: application/json'' -d ''{"username": "hello","address": "dwded"}'''
+        run: 'curl -X POST http://app:3000/api/users -H ''Content-Type: application/json'' -d ''{"username": "hello","address": "dwded"}'''
         # -X es el flag de CURL para hacer una POST Request en HTTP; -H es el flag de headers y -d es el de data
       - name: Get Users
-        run: curl http://localhost:3001/api/users
+        run: curl http://app:3000/api/users
